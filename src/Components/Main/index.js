@@ -4,12 +4,15 @@ import ListTask from './ListTask'
 
 export default class Main extends Component {
   render() {
+    const {listTask, deleteTask,changeChecked,filterState} = this.props
     return (
       <section className="main">
         <ul className="todo-list js-todo-list">
         <ListTask
-          listTask={this.props.listTask}
-          deleteTask={this.props.deleteTask} 
+          filterState={filterState}
+          listTask={listTask}
+          deleteTask={deleteTask}
+          changeChecked={changeChecked}
         />
         </ul>
       </section>

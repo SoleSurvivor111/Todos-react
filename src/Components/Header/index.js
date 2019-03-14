@@ -5,6 +5,12 @@ import './Header.scss'
      this.props.inputElement.current.focus()
    }
   render() {
+    const {
+      inputElement,
+      handleInput,
+      addTask,
+      currentTask
+    } = this.props
     return (
       <header className="header">
           <input
@@ -18,11 +24,11 @@ import './Header.scss'
           />
           <input className="header__new-todo"
             placeholder="What needs to be done?"
-            ref={this.props.inputElement}
-            value={this.props.currentTask.text}
+            ref={inputElement}
+            value={currentTask.text}
             autoFocus
-            onChange={this.props.handleInput}
-            onKeyDown={this.props.addTask}
+            onChange={handleInput}
+            onKeyDown={addTask}
           />
 
       </header>

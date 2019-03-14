@@ -12,7 +12,9 @@ import './App.scss'
       currentTask: {
         text: '',
         key: '',
-      }
+        checked: false
+      },
+      filterState: 'All'
   }
   deleteTask = key => {
     const filteredTasks = this.state.listTask.filter(task => {
@@ -26,7 +28,8 @@ import './App.scss'
     const taskText = e.target.value
     const currentTask = {
       text: taskText,
-      key: Date.now()
+      key: Date.now(),
+      checked: false
     }
     this.setState({
       currentTask,
@@ -34,18 +37,48 @@ import './App.scss'
   }
   addTask = e => {
     const enterKey = 13;
-    const newTask = this.state.currentTask
+    const {listTask, currentTask} = this.state
+    const newTask = currentTask
 
     if ((newTask.text.trim() !== '') &&
     (e.which === enterKey || e.keyCode === enterKey)) {
-      const nextListTask = [...this.state.listTask, newTask]
+      const nextListTask = [...listTask, newTask]
       this.setState({
         listTask: nextListTask,
-        currentTask: { text: '', key: ''},
+        currentTask: {
+        text: '',
+        key: '',
+        checked: false
+      },
     })
    }
   }
+  changeChecked = key => {
+    const filteredTasks = this.state.listTask.filter(task => {
+      if (task.key === key) {
+        task.checked = !task.checked
+      }
+      return task
+    })
+    this.setState({
+      listTask: filteredTasks,
+    })
+  }
+  filterCompletedTasks = () => {
+    console.log(true);
+    this.setState({
+      filterState: 'Completed'
+    })
+  }
   render() {
+    const {
+      inputElement,
+      addTask,
+      handleInput,
+      deleteTask,
+      changeChecked
+    } = this
+    const {listTask,currentTask, filterState,filterCompletedTasks} = this.state
     return (
       <div className='container'>
         <div className="todos-logo">
@@ -53,16 +86,20 @@ import './App.scss'
         </div>
         <section className="todoapp js-todoapp">
           <Header
-            inputElement={this.inputElement}
-            addTask={this.addTask}
-            handleInput={this.handleInput}
-            currentTask={this.state.currentTask}
+            inputElement={inputElement}
+            addTask={addTask}
+            handleInput={handleInput}
+            currentTask={currentTask}
           />
           <Main
-            listTask={this.state.listTask}
-            deleteTask={this.deleteTask}
+            filterState={filterState}
+            listTask={listTask}
+            deleteTask={deleteTask}
+            changeChecked={changeChecked}
            />
-          <Footer />
+          <Footer
+            filterCompletedTasks={filterCompletedTasks}
+          />
         </section>
       </div>
     );
