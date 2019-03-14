@@ -1,0 +1,28 @@
+.todoapp {
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 25px 50px 0 rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex: 0 1 550px;
+  flex-direction: column;
+  margin-bottom: 130px;
+  margin-top: 200px;
+  position: relative;
+}
+
+.todos-logo {
+  background: url('../images/todos.png') no-repeat 50% 50%;
+  background-size: cover;
+  border: 1px solid black;
+  height: 198px;
+  left: 0;
+  margin: 0 auto;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 306px;
+
+  &__h1 {
+    font-size: 30px;
+    padding-left: 8px;
+    padding-top: 81px;
+  }
+}
