@@ -19,7 +19,7 @@ import './Header.scss'
           <input className="header__new-todo"
             placeholder="What needs to be done?"
             ref={this.props.inputElement}
-            defaultValue={this.props.currentTask.text}
+            value={this.props.currentTask.text}
             autoFocus
             onChange={this.props.handleInput}
             onKeyDown={this.props.addTask}

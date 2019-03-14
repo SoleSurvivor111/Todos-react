@@ -22,9 +22,8 @@ import './App.scss'
       listTask: filteredTasks,
     })
   }
-  handlerInput = e => {
-    const taskText = e.target.defaultValue
-    console.log(taskText);
+  handleInput = e => {
+    const taskText = e.target.value
     const currentTask = {
       text: taskText,
       key: Date.now()
@@ -36,10 +35,9 @@ import './App.scss'
   addTask = e => {
     const enterKey = 13;
     const newTask = this.state.currentTask
-    console.log(true);
+
     if ((newTask.text.trim() !== '') &&
     (e.which === enterKey || e.keyCode === enterKey)) {
-
       const nextListTask = [...this.state.listTask, newTask]
       this.setState({
         listTask: nextListTask,
@@ -60,7 +58,10 @@ import './App.scss'
             handleInput={this.handleInput}
             currentTask={this.state.currentTask}
           />
-          <Main />
+          <Main
+            listTask={this.state.listTask}
+            deleteTask={this.deleteTask}
+           />
           <Footer />
         </section>
       </div>

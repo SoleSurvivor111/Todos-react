@@ -1,3 +1,19 @@
+.le {
+  list-style: none;
+  position: relative;
+
+  &__edit {
+    border: 1px solid black;
+    font-size: 25px;
+    height: 100%;
+    left: 50px;
+    padding: 15px;
+    position: absolute;
+    top: 0;
+    width: 91%;
+  }
+}
+
 .view {
   align-items: center;
   border-bottom: 1px solid lightgray;
@@ -85,22 +101,5 @@
       width: 40px;
 
     }
-  }
-}
-
-
-.le {
-  list-style: none;
-  position: relative;
-
-  &__edit {
-    border: 1px solid black;
-    font-size: 25px;
-    height: 100%;
-    left: 50px;
-    padding: 15px;
-    position: absolute;
-    top: 0;
-    width: 91%;
   }
 }
