@@ -24,20 +24,7 @@ import './Task.scss'
      )
    }
   render() {
-    let listTask = this.props.listTask
-    const {filterState} = this.props
-    if (filterState === 'Active') {
-      listTask = listTask.filter(task => {
-        return task.checked === false
-      })
-    } else if (filterState === 'Active') {
-        listTask = listTask.filter(task => {
-          return task.checked === true
-        })
-    }
-
-
-
+    const listTask = this.props.listTask
     const createList = listTask.map(this.createTasks)
     return createList
   }
