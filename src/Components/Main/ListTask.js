@@ -10,14 +10,14 @@ import './Task.scss'
            <input
              className='view__toggle'
              type='checkbox'
-             onClick={() => changeChecked(task.key)}
+             onMouseDown={() => changeChecked(task.key)}
              defaultChecked={task.checked}
            />
            <div className='view__checkbox'/>
            <label className='view__lable'>{task.text}</label>
            <button
             className='view__destroy'
-            onClick={() => deleteTask(task.key)}
+            onMouseDown={() => deleteTask(task.key)}
           />
          </div>
        </li>

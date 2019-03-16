@@ -7,11 +7,11 @@ export default class Filters extends Component {
     return (
       <ul className="filters">
         <li className='li' key={33}
-        onClick={filterAllTasks}>
+        onMouseDown={filterAllTasks}>
           <a href="#/" className="all highlight">All</a>
         </li>
         <li className='li' key={32}
-        onClick={filterActiveTasks}>
+        onMouseDown={filterActiveTasks}>
           <a
             href="#/active"
             className='active'>
@@ -19,7 +19,7 @@ export default class Filters extends Component {
           </a>
         </li>
         <li className='li' key={3}
-        onClick={filterCompletedTasks}>
+        onMouseDown={filterCompletedTasks}>
           <a
             href="#/completed"
             className="completed"

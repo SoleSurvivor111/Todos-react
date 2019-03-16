@@ -6,9 +6,9 @@ import './App.scss'
 
 
  class App extends Component {
-  inputElement = React.createRef()
   state = {
       listTask: [],
+      filteredList: [],
       currentTask: {
         text: '',
         key: '',
@@ -17,6 +17,7 @@ import './App.scss'
       filterState: 'All'
   }
   deleteTask = key => {
+    console.log('---deleteTask');
     const filteredTasks = this.state.listTask.filter(task => {
       return task.key !== key
     })
@@ -25,6 +26,7 @@ import './App.scss'
     })
   }
   handleInput = e => {
+    console.log('---handleInput');
     const taskText = e.target.value
     const currentTask = {
       text: taskText,
@@ -34,8 +36,10 @@ import './App.scss'
     this.setState({
       currentTask,
     })
+
   }
   addTask = e => {
+    console.log('---addTask');
     const enterKey = 13;
     const {listTask, currentTask} = this.state
     const newTask = currentTask
@@ -52,6 +56,7 @@ import './App.scss'
       },
     })
    }
+   this.filterListener()
   }
   changeChecked = key => {
     const filteredTasks = this.state.listTask.filter(task => {
@@ -81,9 +86,10 @@ import './App.scss'
     })
   }
   filterListener = () => {
-    const listTask = this.props.listTask
+    console.log('---filterListener');
+    const listTask = this.state.listTask
     let nextListTask = listTask.slice()
-    const {filterState} = this.props
+    const {filterState} = this.state
     if (filterState === 'All') {
      nextListTask = listTask;
     } else if (filterState === 'Active') {
@@ -96,36 +102,34 @@ import './App.scss'
       })
     }
    this.setState({
-     listTask: nextListTask
+     filteredList: nextListTask
    })
   }
   render() {
     const {
-      inputElement,
       addTask,
       handleInput,
       deleteTask,
       changeChecked,
       filterAllTasks,
       filterActiveTasks,
-      filterCompletedTasks
+      filterCompletedTasks,
+      filterListener
     } = this
-    const {listTask,currentTask, filterState} = this.state
+    const {filteredList, currentTask} = this.state
     return (
-      <div className='container'>
+      <div className='container' onMouseUp={filterListener} onKeyUp={filterListener}>
         <div className="todos-logo">
           <h1 className="todos-logo__h1">TODOS</h1>
         </div>
-        <section className="todoapp js-todoapp">
+        <section className="todoapp">
           <Header
-            inputElement={inputElement}
             addTask={addTask}
             handleInput={handleInput}
             currentTask={currentTask}
           />
           <Main
-            filterState={filterState}
-            listTask={listTask}
+            listTask={filteredList}
             deleteTask={deleteTask}
             changeChecked={changeChecked}
            />
