@@ -18,7 +18,12 @@
   }
 
   &__label {
+    left: 0;
+    position: absolute;
+    top: 0;
     width: 45px;
+
+
 
     &::before {
       color: #e6e6e6;
@@ -35,7 +40,7 @@
     border: 0;
     flex: 1 1;
     font-size: 24px;
-    margin-left: 5px;
+    margin-left: 50px;
     outline: 0;
     padding: 16px 16px 16px 0;
     width: 0;

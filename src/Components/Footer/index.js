@@ -9,11 +9,14 @@ export default class Footer extends Component {
       activeTasksFilter,
       completedTasksFilter,
       clearCompleted,
-      listTask
+      listTask,
+      activeTasks,
+      completedTasks,
     } = this.props
-
-    const footer = listTask.length !== 0 && <footer className="footer">
-            <span className="footer__todo-count js-todo-count"></span>
+    const theNumberOfActiveTasks = activeTasks === 1 ? '1 item left': `${activeTasks} items left`
+    const clearCompletedValue = completedTasks === 0 ? false : 'Clear completed'
+    const footer = listTask.length !== 0 && <footer className='footer'>
+            <span className='footer__todo-count'>{theNumberOfActiveTasks}</span>
             <Filters
               filterState={filterState}
               allTasksFilter={allTasksFilter}
@@ -21,9 +24,9 @@ export default class Footer extends Component {
               completedTasksFilter={completedTasksFilter}
             />
             <button
-              className="footer__clear-completed"
+              className='footer__clear-completed'
               onMouseDown={clearCompleted}
-            >Clear completed</button>
+            >{clearCompletedValue}</button>
           </footer>
     return footer
   }

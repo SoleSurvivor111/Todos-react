@@ -9,12 +9,15 @@ import './App.scss'
   state = {
       listTask: [],
       filteredList: [],
+      activeTasks: false,
+      completedTasks: false,
       currentTask: {
         text: '',
         key: '',
         checked: false
       },
-      filterState: 'All'
+      filterState: 'All',
+      prevBtn: false
   }
   deleteTask = key => {
     console.log('---deleteTask');
@@ -69,35 +72,61 @@ import './App.scss'
       listTask: filteredTasks,
     })
   }
+  activatedBtn = (e) => {
+    let defaultBtn = e.target.closest('.filters').querySelector('.all').classList
+    const currentBtn = e.target.classList
+    const prevBtn = this.state.prevBtn.classList
+    if (prevBtn) {
+      prevBtn.remove('highlight')
+    }
+    
+    defaultBtn.remove('highlight')
+    currentBtn.add('highlight')
+    this.setState({
+      prevBtn: e.target
+    })
+ }
 
-  allTasksFilter = () => {
+  allTasksFilter = (e) => {
     this.setState({
       filterState: 'All'
     })
+    this.activatedBtn(e)
   }
-    activeTasksFilter = () => {
+
+    activeTasksFilter = (e) => {
       this.setState({
         filterState: 'Active'
       })
+      this.activatedBtn(e)
     }
-  completedTasksFilter = () => {
+  completedTasksFilter = (e) => {
     this.setState({
       filterState: 'Completed'
     })
+    this.activatedBtn(e)
   }
-  clearCompleted = () => {
+  clearCompleted = (e) => {
     const filteredTasks = this.state.listTask.filter(task => {
       return task.checked === false
     })
     this.setState({
       listTask: filteredTasks
     })
+    this.activatedBtn(e)
   }
   filterListener = () => {
-    console.log('---filterListener');
     const listTask = this.state.listTask
     let nextListTask = listTask.slice()
     const {filterState} = this.state
+    if (filterState === 'All' || filterState === 'Active') {
+      nextListTask = nextListTask.filter(task => {
+      return task.checked === false
+      })
+      this.setState({
+        activeTasks: nextListTask.length
+      })
+    }
     if (filterState === 'All') {
      nextListTask = listTask;
     } else if (filterState === 'Active') {
@@ -108,6 +137,10 @@ import './App.scss'
       nextListTask = nextListTask.filter(task => {
       return task.checked === true
       })
+      this.setState({
+        completedTasks: nextListTask.length
+      })
+      console.log(nextListTask.length);
     }
    this.setState({
      filteredList: nextListTask
@@ -126,7 +159,7 @@ import './App.scss'
       filterListener,
       clearCompleted
     } = this
-    const {filteredList, currentTask,listTask} = this.state
+    const {filteredList, currentTask,listTask,activeTasks,completedTasks} = this.state
     return (
       <div className='container' onMouseUp={filterListener} onKeyUp={filterListener}>
         <div className="todos-logo">
@@ -137,6 +170,7 @@ import './App.scss'
             addTask={addTask}
             handleInput={handleInput}
             currentTask={currentTask}
+            listTask={listTask}
           />
           <Main
             listTask={filteredList}
@@ -145,6 +179,8 @@ import './App.scss'
            />
           <Footer
             listTask={listTask}
+            activeTasks={activeTasks}
+            completedTasks={completedTasks}
             allTasksFilter={allTasksFilter}
             activeTasksFilter={activeTasksFilter}
             completedTasksFilter={completedTasksFilter}

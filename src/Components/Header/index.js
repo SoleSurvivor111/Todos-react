@@ -5,19 +5,24 @@ import './Header.scss'
     const {
       handleInput,
       addTask,
-      currentTask
+      currentTask,
+      listTask
     } = this.props
+    const checkbox =  listTask.length !== 0 &&
+      <div>
+        <input
+          id="toggle-all"
+          className="header__toggle-all"
+          type="checkbox"
+        />
+        <label
+          htmlFor="toggle-all"
+          className='header__label'
+        />
+      </div>
     return (
       <header className="header">
-          <input
-            id="toggle-all"
-            className="header__toggle-all"
-            type="checkbox"
-          />
-          <label
-            htmlFor="toggle-all"
-            className='header__label'
-          />
+          {checkbox}
           <input className="header__new-todo"
             placeholder="What needs to be done?"
             value={currentTask.text}

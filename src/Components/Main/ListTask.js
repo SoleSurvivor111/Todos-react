@@ -18,7 +18,7 @@ import './Task.scss'
            <button
             className='view__destroy'
             onMouseDown={() => deleteTask(task.key)}
-          />
+           />
          </div>
        </li>
      )
