@@ -70,19 +70,27 @@ import './App.scss'
     })
   }
 
-  filterAllTasks = () => {
+  allTasksFilter = () => {
     this.setState({
       filterState: 'All'
     })
   }
-    filterActiveTasks = () => {
+    activeTasksFilter = () => {
       this.setState({
         filterState: 'Active'
       })
     }
-  filterCompletedTasks = () => {
+  completedTasksFilter = () => {
     this.setState({
       filterState: 'Completed'
+    })
+  }
+  clearCompleted = () => {
+    const filteredTasks = this.state.listTask.filter(task => {
+      return task.checked === false
+    })
+    this.setState({
+      listTask: filteredTasks
     })
   }
   filterListener = () => {
@@ -105,18 +113,20 @@ import './App.scss'
      filteredList: nextListTask
    })
   }
+
   render() {
     const {
       addTask,
       handleInput,
       deleteTask,
       changeChecked,
-      filterAllTasks,
-      filterActiveTasks,
-      filterCompletedTasks,
-      filterListener
+      allTasksFilter,
+      activeTasksFilter,
+      completedTasksFilter,
+      filterListener,
+      clearCompleted
     } = this
-    const {filteredList, currentTask} = this.state
+    const {filteredList, currentTask,listTask} = this.state
     return (
       <div className='container' onMouseUp={filterListener} onKeyUp={filterListener}>
         <div className="todos-logo">
@@ -134,9 +144,11 @@ import './App.scss'
             changeChecked={changeChecked}
            />
           <Footer
-            filterAllTasks={filterAllTasks}
-            filterActiveTasks={filterActiveTasks}
-            filterCompletedTasks={filterCompletedTasks}
+            listTask={listTask}
+            allTasksFilter={allTasksFilter}
+            activeTasksFilter={activeTasksFilter}
+            completedTasksFilter={completedTasksFilter}
+            clearCompleted={clearCompleted}
           />
         </section>
       </div>

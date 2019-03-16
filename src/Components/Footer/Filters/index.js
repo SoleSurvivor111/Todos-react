@@ -3,31 +3,29 @@ import './Filters.scss'
 
 export default class Filters extends Component {
   render() {
-    const {filterCompletedTasks, filterAllTasks, filterActiveTasks } = this.props
+    const {allTasksFilter, activeTasksFilter, completedTasksFilter} = this.props
+
     return (
       <ul className="filters">
-        <li className='li' key={33}
-        onMouseDown={filterAllTasks}>
-          <a href="#/" className="all highlight">All</a>
-        </li>
-        <li className='li' key={32}
-        onMouseDown={filterActiveTasks}>
-          <a
-            href="#/active"
-            className='active'>
-              Active
-          </a>
-        </li>
-        <li className='li' key={3}
-        onMouseDown={filterCompletedTasks}>
-          <a
-            href="#/completed"
-            className="completed"
-            >
-              Completed
-          </a>
-        </li>
-      </ul>
+             <li className='li' key={33} onMouseDown={allTasksFilter}>
+               <a href="#/" className="all highlight">All</a>
+             </li>
+             <li className='li' key={32} onMouseDown={activeTasksFilter}>
+               <a
+                 href="#/active"
+                 className='active'>
+                   Active
+               </a>
+             </li>
+             <li className='li' key={3} onMouseDown={completedTasksFilter}>
+               <a
+                 href="#/completed"
+                 className="completed"
+                 >
+                   Completed
+               </a>
+             </li>
+           </ul>
     )
   }
 }
