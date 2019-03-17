@@ -6,7 +6,8 @@ import './Header.scss'
       handleInput,
       addTask,
       currentTask,
-      listTask
+      listTask,
+      toggleAll
     } = this.props
     const checkbox =  listTask.length !== 0 &&
       <div>
@@ -18,6 +19,7 @@ import './Header.scss'
         <label
           htmlFor="toggle-all"
           className='header__label'
+          onMouseDown={toggleAll}
         />
       </div>
     return (

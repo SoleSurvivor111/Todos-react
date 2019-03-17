@@ -9,8 +9,8 @@ import './App.scss'
   state = {
       listTask: [],
       filteredList: [],
-      activeTasks: false,
-      completedTasks: false,
+      activeTasks: [],
+      completedTasks: [],
       currentTask: {
         text: '',
         key: '',
@@ -19,6 +19,7 @@ import './App.scss'
       filterState: 'All',
       prevBtn: false
   }
+
   deleteTask = key => {
     console.log('---deleteTask');
     const filteredTasks = this.state.listTask.filter(task => {
@@ -28,6 +29,7 @@ import './App.scss'
       listTask: filteredTasks,
     })
   }
+
   handleInput = e => {
     console.log('---handleInput');
     const taskText = e.target.value
@@ -39,8 +41,8 @@ import './App.scss'
     this.setState({
       currentTask,
     })
-
   }
+
   addTask = e => {
     console.log('---addTask');
     const enterKey = 13;
@@ -61,6 +63,30 @@ import './App.scss'
    }
    this.filterListener()
   }
+
+  toggleAll = (e) => {
+    const {listTask} = this.state
+    const completedTasks = listTask.filter(task => {
+      return task.checked === true
+    })
+    let newList = [];
+    if ((listTask.length !== completedTasks.length)) {
+      newList = listTask.map(task => {
+        task.checked = true
+        return task
+      })
+    } else {
+      newList = listTask.map(task => {
+         task.checked = false
+         return task
+      })
+    }
+    this.setState({
+      filteredList: newList
+    })
+    console.log('----toggleAll');
+  }
+
   changeChecked = key => {
     const filteredTasks = this.state.listTask.filter(task => {
       if (task.key === key) {
@@ -72,15 +98,17 @@ import './App.scss'
       listTask: filteredTasks,
     })
   }
+
   activatedBtn = (e) => {
-    let defaultBtn = e.target.closest('.filters').querySelector('.all').classList
     const currentBtn = e.target.classList
     const prevBtn = this.state.prevBtn.classList
     if (prevBtn) {
       prevBtn.remove('highlight')
     }
-    
-    defaultBtn.remove('highlight')
+    if (e.target.closest('.filters')) {
+      const defaultBtn= e.target.closest('.filters').querySelector('.all').classList
+      defaultBtn.remove('highlight')
+    }
     currentBtn.add('highlight')
     this.setState({
       prevBtn: e.target
@@ -100,12 +128,14 @@ import './App.scss'
       })
       this.activatedBtn(e)
     }
+
   completedTasksFilter = (e) => {
     this.setState({
       filterState: 'Completed'
     })
     this.activatedBtn(e)
   }
+
   clearCompleted = (e) => {
     const filteredTasks = this.state.listTask.filter(task => {
       return task.checked === false
@@ -115,10 +145,11 @@ import './App.scss'
     })
     this.activatedBtn(e)
   }
+
   filterListener = () => {
-    const listTask = this.state.listTask
+    const {filterState,listTask} = this.state
     let nextListTask = listTask.slice()
-    const {filterState} = this.state
+
     if (filterState === 'All' || filterState === 'Active') {
       nextListTask = nextListTask.filter(task => {
       return task.checked === false
@@ -127,6 +158,12 @@ import './App.scss'
         activeTasks: nextListTask.length
       })
     }
+    const completedTasksTask = listTask.filter(task => {
+    return task.checked === true
+    })
+    this.setState({
+      completedTasks: completedTasksTask.length
+    })
     if (filterState === 'All') {
      nextListTask = listTask;
     } else if (filterState === 'Active') {
@@ -137,14 +174,11 @@ import './App.scss'
       nextListTask = nextListTask.filter(task => {
       return task.checked === true
       })
-      this.setState({
-        completedTasks: nextListTask.length
-      })
-      console.log(nextListTask.length);
     }
    this.setState({
      filteredList: nextListTask
    })
+   console.log('----filterListener');
   }
 
   render() {
@@ -157,16 +191,18 @@ import './App.scss'
       activeTasksFilter,
       completedTasksFilter,
       filterListener,
-      clearCompleted
+      clearCompleted,
+      toggleAll
     } = this
     const {filteredList, currentTask,listTask,activeTasks,completedTasks} = this.state
     return (
-      <div className='container' onMouseUp={filterListener} onKeyUp={filterListener}>
+    <div className='container' onMouseUp={filterListener} onKeyUp={filterListener}>
         <div className="todos-logo">
           <h1 className="todos-logo__h1">TODOS</h1>
         </div>
         <section className="todoapp">
           <Header
+            toggleAll={toggleAll}
             addTask={addTask}
             handleInput={handleInput}
             currentTask={currentTask}

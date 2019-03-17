@@ -14,7 +14,7 @@ export default class Footer extends Component {
       completedTasks,
     } = this.props
     const theNumberOfActiveTasks = activeTasks === 1 ? '1 item left': `${activeTasks} items left`
-    const clearCompletedValue = completedTasks === 0 ? false : 'Clear completed'
+    const clearCompletedValue = completedTasks === 0 ? false : 'Clear completed' 
     const footer = listTask.length !== 0 && <footer className='footer'>
             <span className='footer__todo-count'>{theNumberOfActiveTasks}</span>
             <Filters
