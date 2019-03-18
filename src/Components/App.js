@@ -21,7 +21,6 @@ import './App.scss'
   }
 
   deleteTask = key => {
-    console.log('---deleteTask');
     const filteredTasks = this.state.listTask.filter(task => {
       return task.key !== key
     })
@@ -31,7 +30,6 @@ import './App.scss'
   }
 
   handleInput = e => {
-    console.log('---handleInput');
     const taskText = e.target.value
     const currentTask = {
       text: taskText,
@@ -43,8 +41,29 @@ import './App.scss'
     })
   }
 
+   newElement = (tag, nameClass, parent) => {
+  	const el = document.createElement(tag);
+    el.className = nameClass;
+    parent.appendChild(el);
+    return el;
+  }
+
+editInput = (e) => {
+  const view = e.target.parentNode
+  const lable = view.querySelector('.view__lable')
+  const checkbox = e.target.previousSibling
+  const toggle = checkbox.previousSibling.classList.add('invisible')
+  checkbox.classList.add('invisible')
+  const editInput = this.newElement('input', 'le__edit', view)
+  editInput.focus()
+  editInput.value = lable.innerHTML
+}
+
+removeEdditInput = (e) => {
+  console.log('Blur');
+}
+
   addTask = e => {
-    console.log('---addTask');
     const enterKey = 13;
     const {listTask, currentTask} = this.state
     const newTask = currentTask
@@ -69,6 +88,7 @@ import './App.scss'
     const completedTasks = listTask.filter(task => {
       return task.checked === true
     })
+
     let newList = [];
     if ((listTask.length !== completedTasks.length)) {
       newList = listTask.map(task => {
@@ -84,7 +104,6 @@ import './App.scss'
     this.setState({
       filteredList: newList
     })
-    console.log('----toggleAll');
   }
 
   changeChecked = key => {
@@ -151,11 +170,11 @@ import './App.scss'
     let nextListTask = listTask.slice()
 
     if (filterState === 'All' || filterState === 'Active') {
-      nextListTask = nextListTask.filter(task => {
+       const activeTasks = nextListTask.filter(task => {
       return task.checked === false
       })
       this.setState({
-        activeTasks: nextListTask.length
+        activeTasks: activeTasks.length
       })
     }
     const completedTasksTask = listTask.filter(task => {
@@ -165,7 +184,7 @@ import './App.scss'
       completedTasks: completedTasksTask.length
     })
     if (filterState === 'All') {
-     nextListTask = listTask;
+     nextListTask = listTask
     } else if (filterState === 'Active') {
      nextListTask = nextListTask.filter(task => {
      return task.checked === false
@@ -178,9 +197,19 @@ import './App.scss'
    this.setState({
      filteredList: nextListTask
    })
-   console.log('----filterListener');
   }
 
+  localStage = () => {
+    localStorage.setItem('js-todos', JSON.stringify(this.state.listTask));
+    console.log(localStorage.getItem('js-todos'));
+  }
+
+  localStageGetArray= () => {
+    this.setState({
+      listTask: localStorage.getItem('js-todos')
+    })
+    console.log('onLoad');
+  }
   render() {
     const {
       addTask,
@@ -192,11 +221,18 @@ import './App.scss'
       completedTasksFilter,
       filterListener,
       clearCompleted,
-      toggleAll
+      toggleAll,
+      editInput,
+      localStage,
+      localStageGetArray
     } = this
     const {filteredList, currentTask,listTask,activeTasks,completedTasks} = this.state
     return (
-    <div className='container' onMouseUp={filterListener} onKeyUp={filterListener}>
+    <div className='container'
+      onMouseUp={filterListener, localStage}
+      onKeyUp={filterListener, localStage}
+      onLoad={localStageGetArray}
+    >
         <div className="todos-logo">
           <h1 className="todos-logo__h1">TODOS</h1>
         </div>
@@ -212,6 +248,7 @@ import './App.scss'
             listTask={filteredList}
             deleteTask={deleteTask}
             changeChecked={changeChecked}
+            editInput={editInput}
            />
           <Footer
             listTask={listTask}

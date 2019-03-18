@@ -3,9 +3,9 @@ import './Task.scss'
 
  class ListTask extends Component {
    createTasks = task => {
-     const {deleteTask,changeChecked} = this.props
+     const {deleteTask,changeChecked,editInput} = this.props
      return (
-       <li className='le'data-id={task.key} key={task.key}>
+       <li className='le'data-id={task.key} key={task.key}  >
          <div className='view'>
            <input
              className='view__toggle'
@@ -14,7 +14,7 @@ import './Task.scss'
              defaultChecked={task.checked}
            />
            <div className='view__checkbox'/>
-           <label className='view__lable'>{task.text}</label>
+         <label className='view__lable' onDoubleClick={editInput}>{task.text}</label>
            <button
             className='view__destroy'
             onMouseDown={() => deleteTask(task.key)}
