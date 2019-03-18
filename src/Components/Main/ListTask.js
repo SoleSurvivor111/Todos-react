@@ -3,7 +3,7 @@ import './Task.scss'
 
  class ListTask extends Component {
    createTasks = task => {
-     const {deleteTask,changeChecked,editInput} = this.props
+     const {deleteTask,changeChecked,editInput,removeEditInput,keysRemoveEditInput} = this.props
      return (
        <li className='le'data-id={task.key} key={task.key}  >
          <div className='view'>
@@ -19,6 +19,10 @@ import './Task.scss'
             className='view__destroy'
             onMouseDown={() => deleteTask(task.key)}
            />
+           <input type={'textarea'} className={'le__edit'}
+            onBlur={removeEditInput}
+            onKeyDown={keysRemoveEditInput}
+          />
          </div>
        </li>
      )

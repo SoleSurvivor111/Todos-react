@@ -49,19 +49,44 @@ import './App.scss'
   }
 
 editInput = (e) => {
-  const view = e.target.parentNode
-  const lable = view.querySelector('.view__lable')
   const checkbox = e.target.previousSibling
   const toggle = checkbox.previousSibling.classList.add('invisible')
   checkbox.classList.add('invisible')
-  const editInput = this.newElement('input', 'le__edit', view)
+  const editInput = e.target.nextSibling.nextSibling
+  editInput.classList.add('le__edit_active')
   editInput.focus()
-  editInput.value = lable.innerHTML
+  editInput.value = e.target.innerHTML
 }
 
-removeEdditInput = (e) => {
-  console.log('Blur');
+removeEditInput = (e) => {
+  const le = e.target.closest('.le')
+  const toggle = le.querySelector('.view__toggle')
+  const checkbox =  le.querySelector('.view__checkbox')
+  toggle.classList.remove('invisible')
+  checkbox.classList.remove('invisible')
+  e.target.classList.remove('le__edit_active')
+  e.target.blur()
+  const newList = this.state.listTask.filter(task => {
+    if (task.key === Number(le.dataset.id)) {
+      task.text = e.target.value
+      if (e.target.value.trim() === '') {
+        return false
+      }
+    }
+    return task
+  })
+  this.setState({
+    listTask: newList
+  })
 }
+
+ keysRemoveEditInput = (e) => {
+  const enterKey = 13;
+  const escapeKey = 27;
+  if (e.which === enterKey || e.keyCode === enterKey || e.which === escapeKey) {
+    document.activeElement.blur()
+  }
+};
 
   addTask = e => {
     const enterKey = 13;
@@ -200,16 +225,11 @@ removeEdditInput = (e) => {
   }
 
   localStage = () => {
-    localStorage.setItem('js-todos', JSON.stringify(this.state.listTask));
+    localStorage.setItem('js-todos', JSON.stringify(this.state.filteredList));
     console.log(localStorage.getItem('js-todos'));
   }
 
-  localStageGetArray= () => {
-    this.setState({
-      listTask: localStorage.getItem('js-todos')
-    })
-    console.log('onLoad');
-  }
+
   render() {
     const {
       addTask,
@@ -223,17 +243,17 @@ removeEdditInput = (e) => {
       clearCompleted,
       toggleAll,
       editInput,
-      localStage,
-      localStageGetArray
+      removeEditInput,
+      keysRemoveEditInput,
+      localStage
     } = this
     const {filteredList, currentTask,listTask,activeTasks,completedTasks} = this.state
     return (
     <div className='container'
-      onMouseUp={filterListener, localStage}
-      onKeyUp={filterListener, localStage}
-      onLoad={localStageGetArray}
+      onMouseUp={filterListener}
+      onKeyUp={filterListener}
     >
-        <div className="todos-logo">
+        <div className="todos-logo" onKeyDown={localStage} onMouseDown={localStage}>
           <h1 className="todos-logo__h1">TODOS</h1>
         </div>
         <section className="todoapp">
@@ -245,10 +265,12 @@ removeEdditInput = (e) => {
             listTask={listTask}
           />
           <Main
+            keysRemoveEditInput={keysRemoveEditInput}
             listTask={filteredList}
             deleteTask={deleteTask}
             changeChecked={changeChecked}
             editInput={editInput}
+            removeEditInput={removeEditInput}
            />
           <Footer
             listTask={listTask}
