@@ -33,5 +33,7 @@ body {
 }
 
 .container {
-  flex: 0 1 551px;
+  display: flex;
+  flex: 1 1 551px;
+  justify-content: center;
 }

@@ -48,45 +48,46 @@ import './App.scss'
     return el;
   }
 
-editInput = (e) => {
-  const checkbox = e.target.previousSibling
-  const toggle = checkbox.previousSibling.classList.add('invisible')
-  checkbox.classList.add('invisible')
-  const editInput = e.target.nextSibling.nextSibling
-  editInput.classList.add('le__edit_active')
-  editInput.focus()
-  editInput.value = e.target.innerHTML
-}
-
-removeEditInput = (e) => {
-  const le = e.target.closest('.le')
-  const toggle = le.querySelector('.view__toggle')
-  const checkbox =  le.querySelector('.view__checkbox')
-  toggle.classList.remove('invisible')
-  checkbox.classList.remove('invisible')
-  e.target.classList.remove('le__edit_active')
-  e.target.blur()
-  const newList = this.state.listTask.filter(task => {
-    if (task.key === Number(le.dataset.id)) {
-      task.text = e.target.value
-      if (e.target.value.trim() === '') {
-        return false
-      }
-    }
-    return task
-  })
-  this.setState({
-    listTask: newList
-  })
-}
-
- keysRemoveEditInput = (e) => {
-  const enterKey = 13;
-  const escapeKey = 27;
-  if (e.which === enterKey || e.keyCode === enterKey || e.which === escapeKey) {
-    document.activeElement.blur()
+  editInput = (e) => {
+    const checkbox = e.target.previousSibling
+    const toggle = checkbox.previousSibling.classList.add('invisible')
+    checkbox.classList.add('invisible')
+    const editInput = e.target.nextSibling.nextSibling
+    editInput.classList.add('le__edit_active')
+    editInput.focus()
+    editInput.value = e.target.innerHTML
   }
-};
+
+  removeEditInput = (e) => {
+    const le = e.target.closest('.le')
+    const toggle = le.querySelector('.view__toggle')
+    const checkbox =  le.querySelector('.view__checkbox')
+    toggle.classList.remove('invisible')
+    checkbox.classList.remove('invisible')
+    e.target.classList.remove('le__edit_active')
+
+    const newList = this.state.listTask.filter(task => {
+      if (task.key === Number(le.dataset.id)) {
+        task.text = e.target.value
+        if (e.target.value.trim() === '') {
+          return false
+        }
+      }
+      return task
+    })
+    this.setState({
+      listTask: newList
+    })
+    e.target.parentNode.focus()
+  }
+
+   keysRemoveEditInput = (e) => {
+    const enterKey = 13;
+    const escapeKey = 27;
+    if (e.which === enterKey || e.keyCode === enterKey || e.which === escapeKey) {
+      document.activeElement.blur()
+    }
+  };
 
   addTask = e => {
     const enterKey = 13;
@@ -252,6 +253,7 @@ removeEditInput = (e) => {
     <div className='container'
       onMouseUp={filterListener}
       onKeyUp={filterListener}
+      onKeyDown={filterListener}
     >
         <div className="todos-logo" onKeyDown={localStage} onMouseDown={localStage}>
           <h1 className="todos-logo__h1">TODOS</h1>
