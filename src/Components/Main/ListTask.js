@@ -11,7 +11,7 @@ import './Task.scss'
              className='view__toggle'
              type='checkbox'
              onMouseDown={() => changeChecked(task.key)}
-             defaultChecked={task.checked}
+             checked={task.checked}
            />
            <div className='view__checkbox'/>
          <label className='view__lable' onDoubleClick={editInput}>{task.text}</label>

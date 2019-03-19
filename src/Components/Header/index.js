@@ -7,14 +7,17 @@ import './Header.scss'
       addTask,
       currentTask,
       listTask,
-      toggleAll
+      toggleAll,
+      completedTasks
     } = this.props
+    const toggleAllChecked = listTask.length === completedTasks ? true : false
     const checkbox =  listTask.length !== 0 &&
       <div>
         <input
           id="toggle-all"
           className="header__toggle-all"
           type="checkbox"
+          checked={toggleAllChecked}
         />
         <label
           htmlFor="toggle-all"

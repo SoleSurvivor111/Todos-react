@@ -4,10 +4,19 @@ import Main from './Main'
 import Footer from './Footer'
 import './App.scss'
 
+const getFilterList = (list, filterState) => {
+  if (filterState === 'All') {
+    return list;
+  }
+  return list.filter(item => {
+    return filterState === 'Active' ? !item.checked : item.checked;
+  })
+}
+
 
  class App extends Component {
   state = {
-      listTask: [],
+      listTask: JSON.parse(localStorage.getItem('js-todos')) ? JSON.parse(localStorage.getItem('js-todos')) : [],
       filteredList: [],
       activeTasks: [],
       completedTasks: [],
@@ -118,17 +127,21 @@ import './App.scss'
     let newList = [];
     if ((listTask.length !== completedTasks.length)) {
       newList = listTask.map(task => {
-        task.checked = true
-        return task
+        return {
+          ...task,
+          checked: true,
+        };
       })
     } else {
       newList = listTask.map(task => {
-         task.checked = false
-         return task
+        return {
+          ...task,
+          checked: false,
+        };
       })
     }
     this.setState({
-      filteredList: newList
+      listTask: newList
     })
   }
 
@@ -227,9 +240,8 @@ import './App.scss'
 
   localStage = () => {
     localStorage.setItem('js-todos', JSON.stringify(this.state.filteredList));
-    console.log(localStorage.getItem('js-todos'));
+    console.log( JSON.parse(localStorage.getItem('js-todos')).length);
   }
-
 
   render() {
     const {
@@ -248,14 +260,15 @@ import './App.scss'
       keysRemoveEditInput,
       localStage
     } = this
-    const {filteredList, currentTask,listTask,activeTasks,completedTasks} = this.state
+    const {filterState, currentTask,listTask,activeTasks,completedTasks} = this.state
+    const filteredList = getFilterList(listTask, filterState);
     return (
     <div className='container'
-      onMouseUp={filterListener}
-      onKeyUp={filterListener}
-      onKeyDown={filterListener}
+      onClick={() => {localStage();filterListener()}}
+      onKeyDown={() => {localStage();filterListener()}}
+      onChange={() => {localStage();filterListener()}}
     >
-        <div className="todos-logo" onKeyDown={localStage} onMouseDown={localStage}>
+        <div className="todos-logo"  >
           <h1 className="todos-logo__h1">TODOS</h1>
         </div>
         <section className="todoapp">
@@ -265,6 +278,7 @@ import './App.scss'
             handleInput={handleInput}
             currentTask={currentTask}
             listTask={listTask}
+            completedTasks={completedTasks}
           />
           <Main
             keysRemoveEditInput={keysRemoveEditInput}
