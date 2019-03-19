@@ -4,10 +4,10 @@ import ListTask from './ListTask'
 
 export default class Main extends Component {
   render() {
-    const {listTask, deleteTask,changeChecked,editInput,removeEditInput,keysRemoveEditInput} = this.props
+    const {listTask, deleteTask,changeChecked,editInput,removeEditInput, keysRemoveEditInput,filterState} = this.props
     return (
       <section className="main">
-        <ul className="todo-list js-todo-list">
+        <ul className="todo-list">
         <ListTask
           editInput={editInput}
           listTask={listTask}
@@ -15,6 +15,7 @@ export default class Main extends Component {
           keysRemoveEditInput={keysRemoveEditInput}
           changeChecked={changeChecked}
           removeEditInput={removeEditInput}
+          filterState={filterState}
         />
         </ul>
       </section>

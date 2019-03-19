@@ -4,20 +4,9 @@ import Main from './Main'
 import Footer from './Footer'
 import './App.scss'
 
-const getFilterList = (list, filterState) => {
-  if (filterState === 'All') {
-    return list;
-  }
-  return list.filter(item => {
-    return filterState === 'Active' ? !item.checked : item.checked;
-  })
-}
-
-
  class App extends Component {
   state = {
-      listTask: JSON.parse(localStorage.getItem('js-todos')) ? JSON.parse(localStorage.getItem('js-todos')) : [],
-      filteredList: [],
+      listTask: JSON.parse(localStorage.getItem('js-todos')),
       activeTasks: [],
       completedTasks: [],
       currentTask: {
@@ -87,10 +76,11 @@ const getFilterList = (list, filterState) => {
     this.setState({
       listTask: newList
     })
-    e.target.parentNode.focus()
+    localStorage.setItem('js-todos', JSON.stringify(newList));
   }
 
    keysRemoveEditInput = (e) => {
+    const list = this.state.listTask
     const enterKey = 13;
     const escapeKey = 27;
     if (e.which === enterKey || e.keyCode === enterKey || e.which === escapeKey) {
@@ -115,7 +105,6 @@ const getFilterList = (list, filterState) => {
       },
     })
    }
-   this.filterListener()
   }
 
   toggleAll = (e) => {
@@ -204,45 +193,6 @@ const getFilterList = (list, filterState) => {
     this.activatedBtn(e)
   }
 
-  filterListener = () => {
-    const {filterState,listTask} = this.state
-    let nextListTask = listTask.slice()
-
-    if (filterState === 'All' || filterState === 'Active') {
-       const activeTasks = nextListTask.filter(task => {
-      return task.checked === false
-      })
-      this.setState({
-        activeTasks: activeTasks.length
-      })
-    }
-    const completedTasksTask = listTask.filter(task => {
-    return task.checked === true
-    })
-    this.setState({
-      completedTasks: completedTasksTask.length
-    })
-    if (filterState === 'All') {
-     nextListTask = listTask
-    } else if (filterState === 'Active') {
-     nextListTask = nextListTask.filter(task => {
-     return task.checked === false
-     })
-    } else if (filterState === 'Completed') {
-      nextListTask = nextListTask.filter(task => {
-      return task.checked === true
-      })
-    }
-   this.setState({
-     filteredList: nextListTask
-   })
-  }
-
-  localStage = () => {
-    localStorage.setItem('js-todos', JSON.stringify(this.state.filteredList));
-    console.log( JSON.parse(localStorage.getItem('js-todos')).length);
-  }
-
   render() {
     const {
       addTask,
@@ -252,7 +202,6 @@ const getFilterList = (list, filterState) => {
       allTasksFilter,
       activeTasksFilter,
       completedTasksFilter,
-      filterListener,
       clearCompleted,
       toggleAll,
       editInput,
@@ -260,13 +209,14 @@ const getFilterList = (list, filterState) => {
       keysRemoveEditInput,
       localStage
     } = this
-    const {filterState, currentTask,listTask,activeTasks,completedTasks} = this.state
-    const filteredList = getFilterList(listTask, filterState);
+    const {filterState, currentTask,listTask} = this.state
+    localStorage.setItem('js-todos', JSON.stringify(this.state.listTask));
+
+
     return (
     <div className='container'
-      onClick={() => {localStage();filterListener()}}
-      onKeyDown={() => {localStage();filterListener()}}
-      onChange={() => {localStage();filterListener()}}
+      onKeyUp={localStage}
+      onChange={localStage}
     >
         <div className="todos-logo"  >
           <h1 className="todos-logo__h1">TODOS</h1>
@@ -278,20 +228,18 @@ const getFilterList = (list, filterState) => {
             handleInput={handleInput}
             currentTask={currentTask}
             listTask={listTask}
-            completedTasks={completedTasks}
           />
           <Main
             keysRemoveEditInput={keysRemoveEditInput}
-            listTask={filteredList}
+            listTask={listTask}
             deleteTask={deleteTask}
             changeChecked={changeChecked}
             editInput={editInput}
             removeEditInput={removeEditInput}
+            filterState={filterState}
            />
           <Footer
             listTask={listTask}
-            activeTasks={activeTasks}
-            completedTasks={completedTasks}
             allTasksFilter={allTasksFilter}
             activeTasksFilter={activeTasksFilter}
             completedTasksFilter={completedTasksFilter}

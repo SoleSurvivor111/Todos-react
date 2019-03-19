@@ -3,9 +3,24 @@ import './Task.scss'
 
  class ListTask extends Component {
    createTasks = task => {
-     const {deleteTask,changeChecked,editInput,removeEditInput,keysRemoveEditInput} = this.props
+    const filterState = this.props.filterState
+    let liClassName;
+    if (filterState === 'All') {
+      liClassName = 'le'
+    } else if (filterState === 'Active') {
+      liClassName = task.checked ? 'le hidden' : 'le'
+    } else if ((filterState === 'Completed')){
+      liClassName = task.checked ? 'le' : 'le hidden'
+    }
+     const {
+       deleteTask,
+       changeChecked,
+       editInput,
+       removeEditInput,
+       keysRemoveEditInput
+     } = this.props
      return (
-       <li className='le'data-id={task.key} key={task.key}  >
+       <li className={liClassName} data-id={task.key} key={task.key}  >
          <div className='view'>
            <input
              className='view__toggle'
