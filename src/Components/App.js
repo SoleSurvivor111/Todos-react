@@ -211,7 +211,9 @@ import './App.scss'
     } = this
     const {filterState, currentTask,listTask} = this.state
     localStorage.setItem('js-todos', JSON.stringify(this.state.listTask));
-
+    const completedTasks = listTask.filter(task => {
+      return task.checked === true
+    }).length
 
     return (
     <div className='container'
@@ -228,6 +230,7 @@ import './App.scss'
             handleInput={handleInput}
             currentTask={currentTask}
             listTask={listTask}
+            completedTasks={completedTasks}
           />
           <Main
             keysRemoveEditInput={keysRemoveEditInput}
@@ -244,6 +247,7 @@ import './App.scss'
             activeTasksFilter={activeTasksFilter}
             completedTasksFilter={completedTasksFilter}
             clearCompleted={clearCompleted}
+            completedTasks={completedTasks}
           />
         </section>
       </div>

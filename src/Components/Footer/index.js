@@ -8,14 +8,10 @@ export default class Footer extends Component {
       activeTasksFilter,
       completedTasksFilter,
       clearCompleted,
-      listTask
+      listTask,
+      completedTasks
     } = this.props
-    const activeTasks = listTask.filter(task => {
-      return task.checked === false
-    }).length
-    const completedTasks = listTask.filter(task => {
-      return task.checked === true
-    }).length
+    const activeTasks = listTask.length - completedTasks;
     const theNumberOfActiveTasks = activeTasks === 1 ? '1 item left': `${activeTasks} items left`
     const clearCompletedValue = completedTasks === 0 ? false : 'Clear completed'
     const footer = listTask.length !== 0 && <footer className='footer'>

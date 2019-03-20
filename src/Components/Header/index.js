@@ -7,11 +7,10 @@ import './Header.scss'
       addTask,
       currentTask,
       listTask,
-      toggleAll
+      toggleAll,
+      completedTasks
     } = this.props
-    const completedTasks = listTask.filter(task => {
-      return task.checked === true
-    }).length
+
     const toggleAllChecked = listTask.length === completedTasks ? true : false
     const checkbox =  listTask.length !== 0 &&
       <div>
