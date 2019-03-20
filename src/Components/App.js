@@ -7,8 +7,6 @@ import './App.scss'
  class App extends Component {
   state = {
       listTask: JSON.parse(localStorage.getItem('js-todos')),
-      activeTasks: [],
-      completedTasks: [],
       currentTask: {
         text: '',
         key: '',
@@ -76,11 +74,9 @@ import './App.scss'
     this.setState({
       listTask: newList
     })
-    localStorage.setItem('js-todos', JSON.stringify(newList));
   }
 
    keysRemoveEditInput = (e) => {
-    const list = this.state.listTask
     const enterKey = 13;
     const escapeKey = 27;
     if (e.which === enterKey || e.keyCode === enterKey || e.which === escapeKey) {
@@ -160,7 +156,7 @@ import './App.scss'
     this.setState({
       prevBtn: e.target
     })
- }
+  }
 
   allTasksFilter = (e) => {
     this.setState({
@@ -169,12 +165,12 @@ import './App.scss'
     this.activatedBtn(e)
   }
 
-    activeTasksFilter = (e) => {
-      this.setState({
-        filterState: 'Active'
-      })
-      this.activatedBtn(e)
-    }
+  activeTasksFilter = (e) => {
+    this.setState({
+      filterState: 'Active'
+    })
+    this.activatedBtn(e)
+  }
 
   completedTasksFilter = (e) => {
     this.setState({
@@ -190,7 +186,6 @@ import './App.scss'
     this.setState({
       listTask: filteredTasks
     })
-    this.activatedBtn(e)
   }
 
   render() {
@@ -207,19 +202,15 @@ import './App.scss'
       editInput,
       removeEditInput,
       keysRemoveEditInput,
-      localStage
     } = this
-    const {filterState, currentTask,listTask} = this.state
+    const {filterState, currentTask, listTask} = this.state
     localStorage.setItem('js-todos', JSON.stringify(this.state.listTask));
     const completedTasks = listTask.filter(task => {
       return task.checked === true
     }).length
 
     return (
-    <div className='container'
-      onKeyUp={localStage}
-      onChange={localStage}
-    >
+    <div className='container'>
         <div className="todos-logo"  >
           <h1 className="todos-logo__h1">TODOS</h1>
         </div>

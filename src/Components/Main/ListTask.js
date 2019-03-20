@@ -9,7 +9,7 @@ import './Task.scss'
       liClassName = 'le'
     } else if (filterState === 'Active') {
       liClassName = task.checked ? 'le hidden' : 'le'
-    } else if ((filterState === 'Completed')){
+    } else if ((filterState === 'Completed')) {
       liClassName = task.checked ? 'le' : 'le hidden'
     }
      const {

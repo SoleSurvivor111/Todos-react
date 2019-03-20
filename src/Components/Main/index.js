@@ -4,7 +4,14 @@ import ListTask from './ListTask'
 
 export default class Main extends Component {
   render() {
-    const {listTask, deleteTask,changeChecked,editInput,removeEditInput, keysRemoveEditInput,filterState} = this.props
+    const {listTask,
+      deleteTask,
+      changeChecked,
+      editInput,
+      removeEditInput,
+      keysRemoveEditInput,
+      filterState
+    } = this.props
     return (
       <section className="main">
         <ul className="todo-list">
