@@ -5,7 +5,7 @@ import ListTask from './ListTask'
 export default class Main extends Component {
   render() {
     const {listTask,
-      deleteTask,
+      onDeleteTask,
       changeChecked,
       editInput,
       removeEditInput,
@@ -18,7 +18,7 @@ export default class Main extends Component {
         <ListTask
           editInput={editInput}
           listTask={listTask}
-          deleteTask={deleteTask}
+          onDeleteTask={onDeleteTask}
           keysRemoveEditInput={keysRemoveEditInput}
           changeChecked={changeChecked}
           removeEditInput={removeEditInput}

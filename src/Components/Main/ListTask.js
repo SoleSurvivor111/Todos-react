@@ -13,7 +13,7 @@ import './Task.scss'
       liClassName = task.checked ? 'le' : 'le hidden'
     }
      const {
-       deleteTask,
+       onDeleteTask,
        changeChecked,
        editInput,
        removeEditInput,
@@ -32,7 +32,7 @@ import './Task.scss'
          <label className='view__lable' onDoubleClick={editInput}>{task.text}</label>
            <button
             className='view__destroy'
-            onMouseDown={() => deleteTask(task.key)}
+            onMouseDown={() => onDeleteTask(task.key)}
            />
            <input type={'textarea'} className={'le__edit'}
             onBlur={removeEditInput}

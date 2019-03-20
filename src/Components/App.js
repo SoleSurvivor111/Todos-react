@@ -3,20 +3,20 @@ import Header from './Header'
 import Main from './Main'
 import Footer from './Footer'
 import './App.scss'
+const ENTER_KEY = 13;
 
  class App extends Component {
   state = {
-      listTask: JSON.parse(localStorage.getItem('js-todos')),
+      listTask: JSON.parse(localStorage.getItem('js-todos')) || [],
       currentTask: {
         text: '',
         key: '',
         checked: false
       },
       filterState: 'All',
-      prevBtn: false
   }
 
-  deleteTask = key => {
+  onDeleteTask = key => {
     const filteredTasks = this.state.listTask.filter(task => {
       return task.key !== key
     })
@@ -37,16 +37,9 @@ import './App.scss'
     })
   }
 
-   newElement = (tag, nameClass, parent) => {
-  	const el = document.createElement(tag);
-    el.className = nameClass;
-    parent.appendChild(el);
-    return el;
-  }
-
   editInput = (e) => {
     const checkbox = e.target.previousSibling
-    const toggle = checkbox.previousSibling.classList.add('invisible')
+    checkbox.previousSibling.classList.add('invisible')
     checkbox.classList.add('invisible')
     const editInput = e.target.nextSibling.nextSibling
     editInput.classList.add('le__edit_active')
@@ -77,20 +70,18 @@ import './App.scss'
   }
 
    keysRemoveEditInput = (e) => {
-    const enterKey = 13;
     const escapeKey = 27;
-    if (e.which === enterKey || e.keyCode === enterKey || e.which === escapeKey) {
+    if (e.which === ENTER_KEY || e.keyCode === ENTER_KEY || e.which === escapeKey) {
       document.activeElement.blur()
     }
   };
 
   addTask = e => {
-    const enterKey = 13;
     const {listTask, currentTask} = this.state
     const newTask = currentTask
 
     if ((newTask.text.trim() !== '') &&
-    (e.which === enterKey || e.keyCode === enterKey)) {
+    (e.which === ENTER_KEY || e.keyCode === ENTER_KEY)) {
       const nextListTask = [...listTask, newTask]
       this.setState({
         listTask: nextListTask,
@@ -110,21 +101,13 @@ import './App.scss'
     })
 
     let newList = [];
-    if ((listTask.length !== completedTasks.length)) {
-      newList = listTask.map(task => {
-        return {
-          ...task,
-          checked: true,
-        };
-      })
-    } else {
-      newList = listTask.map(task => {
-        return {
-          ...task,
-          checked: false,
-        };
-      })
-    }
+    const checked = listTask.length !== completedTasks.length;
+    newList = listTask.map(task => {
+            return {
+              ...task,
+              checked,
+            };
+          })
     this.setState({
       listTask: newList
     })
@@ -142,41 +125,23 @@ import './App.scss'
     })
   }
 
-  activatedBtn = (e) => {
-    const currentBtn = e.target.classList
-    const prevBtn = this.state.prevBtn.classList
-    if (prevBtn) {
-      prevBtn.remove('highlight')
-    }
-    if (e.target.closest('.filters')) {
-      const defaultBtn= e.target.closest('.filters').querySelector('.all').classList
-      defaultBtn.remove('highlight')
-    }
-    currentBtn.add('highlight')
-    this.setState({
-      prevBtn: e.target
-    })
-  }
 
   allTasksFilter = (e) => {
     this.setState({
       filterState: 'All'
     })
-    this.activatedBtn(e)
   }
 
   activeTasksFilter = (e) => {
     this.setState({
       filterState: 'Active'
     })
-    this.activatedBtn(e)
   }
 
   completedTasksFilter = (e) => {
     this.setState({
       filterState: 'Completed'
     })
-    this.activatedBtn(e)
   }
 
   clearCompleted = (e) => {
@@ -192,7 +157,7 @@ import './App.scss'
     const {
       addTask,
       handleInput,
-      deleteTask,
+      onDeleteTask,
       changeChecked,
       allTasksFilter,
       activeTasksFilter,
@@ -226,7 +191,7 @@ import './App.scss'
           <Main
             keysRemoveEditInput={keysRemoveEditInput}
             listTask={listTask}
-            deleteTask={deleteTask}
+            onDeleteTask={onDeleteTask}
             changeChecked={changeChecked}
             editInput={editInput}
             removeEditInput={removeEditInput}
@@ -239,6 +204,7 @@ import './App.scss'
             completedTasksFilter={completedTasksFilter}
             clearCompleted={clearCompleted}
             completedTasks={completedTasks}
+            filterState={filterState}
           />
         </section>
       </div>

@@ -5,14 +5,16 @@ export default class Filters extends Component {
 
 
   render() {
-    const {allTasksFilter, activeTasksFilter, completedTasksFilter} = this.props
-
+    const {allTasksFilter, activeTasksFilter, completedTasksFilter, filterState} = this.props
+    const all =  filterState === 'All' ? 'All highlight' : 'All'
+    const  active =  filterState === 'Active' ? 'Active highlight' : 'Active'
+    const  completed =  filterState === 'Completed' ? 'Completed highlight' : 'Active'
     return (
       <ul className="filters" >
              <li className='li' key={33} onMouseDown={allTasksFilter}>
                <a
                  href="#/"
-                 className="all highlight"
+                 className={all}
                >
                 All
               </a>
@@ -20,7 +22,7 @@ export default class Filters extends Component {
              <li className='li' key={32} onMouseDown={activeTasksFilter}>
                <a
                  href="#/active"
-                 className='active'
+                 className={active}
                >
                  Active
                </a>
@@ -28,7 +30,7 @@ export default class Filters extends Component {
              <li className='li' key={3} onMouseDown={completedTasksFilter}>
                <a
                  href="#/completed"
-                 className="completed"
+                 className={completed}
                >
                  Completed
                </a>
