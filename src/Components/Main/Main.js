@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 import ListTask from './ListTask'
 
-
 export default class Main extends Component {
   render() {
     const {

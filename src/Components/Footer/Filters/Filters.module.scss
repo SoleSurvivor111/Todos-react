@@ -1,4 +1,8 @@
-  .filters {
+.highlight {
+  border-color: darkblue !important;
+}
+
+.filters {
   left: 0;
   list-style: none;
   position: absolute;
@@ -23,9 +27,7 @@
 }
 
 @media only screen and (max-width: 430px) {
-
   .filters {
     bottom: 10px;
-    position: absolute;
   }
 }

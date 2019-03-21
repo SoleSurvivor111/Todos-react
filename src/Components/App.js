@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
-import Header from './Header'
-import Main from './Main'
-import Footer from './Footer'
-import './App.scss'
+import Header from './Header/Header'
+import Main from './Main/Main'
+import Footer from './Footer/Footer'
+import style from './App.module.scss'
+import s from './Main/Task.module.scss'
 const ENTER_KEY = 13;
 
  class App extends Component {
@@ -42,18 +43,18 @@ const ENTER_KEY = 13;
     checkbox.previousSibling.classList.add('invisible')
     checkbox.classList.add('invisible')
     const handleEditInput = e.target.nextSibling.nextSibling
-    handleEditInput.classList.add('le__edit_active')
+    handleEditInput.classList.add(s.view__edit_active)
     handleEditInput.focus()
     handleEditInput.value = e.target.innerHTML
   }
 
   handleRemoveEditInput = (e) => {
-    const le = e.target.closest('.le')
-    const toggle = le.querySelector('.view__toggle')
-    const checkbox =  le.querySelector('.view__checkbox')
+    const le = e.target.closest(`.${s.le}`)
+    const toggle = le.querySelector( `.${s.view__toggle}`)
+    const checkbox =  le.querySelector(`.${s.view__checkbox}`)
     toggle.classList.remove('invisible')
     checkbox.classList.remove('invisible')
-    e.target.classList.remove('le__edit_active')
+    e.target.classList.remove(s.view__edit_active)
 
     const newList = this.state.listTask.filter(task => {
       if (task.key === Number(le.dataset.id)) {
@@ -162,11 +163,11 @@ const ENTER_KEY = 13;
     }).length
 
     return (
-    <div className='container'>
-        <div className="todos-logo"  >
-          <h1 className="todos-logo__h1">TODOS</h1>
+    <div className={'container'}>
+        <div className={style['todos-logo']}  >
+          <h1 className={style['todos-logo__h1']}>TODOS</h1>
         </div>
-        <section className="todoapp">
+        <section className={style.todoapp}>
           <Header
             handleToggleAll={this.handletoggleAll}
             handleAddTask={this.handleAddTask}

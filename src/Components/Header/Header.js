@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
-import './Header.scss'
+import style from './Header.module.scss'
+
  class Header extends Component {
   render() {
     const {
@@ -13,28 +14,27 @@ import './Header.scss'
       <div>
         <input
           id="toggle-all"
-          className="header__toggle-all"
+          className={style['header__toggle-all']}
           type="checkbox"
           checked={toggleAllChecked}
         />
         <label
           htmlFor="toggle-all"
-          className='header__label'
+          className={style.header__label}
           onMouseDown={this.props.handleToggleAll}
         />
       </div>
 
     return (
-      <header className="header">
+      <header className={style.header}>
           {checkbox}
-          <input className="header__new-todo"
+          <input className={style['header__new-todo']}
             placeholder="What needs to be done?"
             value={currentTask.text}
             autoFocus
             onChange={this.props.handleInput}
             onKeyDown={this.props.handleAddTask}
           />
-
       </header>
     )
   }

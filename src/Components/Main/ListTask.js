@@ -1,34 +1,34 @@
 import React, {Component} from 'react'
-import './Task.scss'
+import style from './Task.module.scss'
 
  class ListTask extends Component {
    createTasks = task => {
     const filterState = this.props.filterState
     let liClassName;
     if (filterState === 'All') {
-      liClassName = 'le'
+      liClassName = style.le
     } else if (filterState === 'Active') {
-      liClassName = task.checked ? 'le hidden' : 'le'
+      liClassName = task.checked ? `${style.le} hidden` : style.le
     } else if ((filterState === 'Completed')) {
-      liClassName = task.checked ? 'le' : 'le hidden'
+      liClassName = task.checked ? style.le : `${style.le} hidden`
     }
 
      return (
        <li className={liClassName} data-id={task.key} key={task.key}  >
-         <div className='view'>
+         <div className={style.view}>
            <input
-             className='view__toggle'
+             className={style.view__toggle}
              type='checkbox'
              onMouseDown={() => this.props.onChangeChecked(task.key)}
              checked={task.checked}
            />
-           <div className='view__checkbox'/>
-         <label className='view__lable' onDoubleClick={this.props.handleEditInput}>{task.text}</label>
+           <div className={style.view__checkbox}/>
+         <label className={style.view__lable} onDoubleClick={this.props.handleEditInput}>{task.text}</label>
            <button
-            className='view__destroy'
+            className={style.view__destroy}
             onMouseDown={() => this.props.onDeleteTask(task.key)}
            />
-           <input type={'textarea'} className={'le__edit'}
+           <input type={'textarea'} className={style.view__edit}
             onBlur={this.props.handleRemoveEditInput}
             onKeyDown={this.props.handleKeysRemoveEditInput}
           />
