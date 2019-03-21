@@ -12,31 +12,25 @@ import './Task.scss'
     } else if ((filterState === 'Completed')) {
       liClassName = task.checked ? 'le' : 'le hidden'
     }
-     const {
-       onDeleteTask,
-       changeChecked,
-       editInput,
-       removeEditInput,
-       keysRemoveEditInput
-     } = this.props
+
      return (
        <li className={liClassName} data-id={task.key} key={task.key}  >
          <div className='view'>
            <input
              className='view__toggle'
              type='checkbox'
-             onMouseDown={() => changeChecked(task.key)}
+             onMouseDown={() => this.props.onChangeChecked(task.key)}
              checked={task.checked}
            />
            <div className='view__checkbox'/>
-         <label className='view__lable' onDoubleClick={editInput}>{task.text}</label>
+         <label className='view__lable' onDoubleClick={this.props.handleEditInput}>{task.text}</label>
            <button
             className='view__destroy'
-            onMouseDown={() => onDeleteTask(task.key)}
+            onMouseDown={() => this.props.onDeleteTask(task.key)}
            />
            <input type={'textarea'} className={'le__edit'}
-            onBlur={removeEditInput}
-            onKeyDown={keysRemoveEditInput}
+            onBlur={this.props.handleRemoveEditInput}
+            onKeyDown={this.props.handleKeysRemoveEditInput}
           />
          </div>
        </li>

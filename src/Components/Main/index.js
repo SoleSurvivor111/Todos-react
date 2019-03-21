@@ -4,24 +4,20 @@ import ListTask from './ListTask'
 
 export default class Main extends Component {
   render() {
-    const {listTask,
-      onDeleteTask,
-      changeChecked,
-      editInput,
-      removeEditInput,
-      keysRemoveEditInput,
+    const {
+      listTask,
       filterState
     } = this.props
     return (
       <section className="main">
         <ul className="todo-list">
         <ListTask
-          editInput={editInput}
+          handleEditInput={this.props.handleEditInput}
           listTask={listTask}
-          onDeleteTask={onDeleteTask}
-          keysRemoveEditInput={keysRemoveEditInput}
-          changeChecked={changeChecked}
-          removeEditInput={removeEditInput}
+          onDeleteTask={this.props.onDeleteTask}
+          handleKeysRemoveEditInput={this.props.handleKeysRemoveEditInput}
+          onChangeChecked={this.props.onChangeChecked}
+          handleRemoveEditInput={this.props.handleRemoveEditInput}
           filterState={filterState}
         />
         </ul>

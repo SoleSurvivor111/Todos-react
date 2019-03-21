@@ -3,11 +3,8 @@ import './Header.scss'
  class Header extends Component {
   render() {
     const {
-      handleInput,
-      addTask,
       currentTask,
       listTask,
-      toggleAll,
       completedTasks
     } = this.props
 
@@ -23,7 +20,7 @@ import './Header.scss'
         <label
           htmlFor="toggle-all"
           className='header__label'
-          onMouseDown={toggleAll}
+          onMouseDown={this.props.handleToggleAll}
         />
       </div>
 
@@ -34,8 +31,8 @@ import './Header.scss'
             placeholder="What needs to be done?"
             value={currentTask.text}
             autoFocus
-            onChange={handleInput}
-            onKeyDown={addTask}
+            onChange={this.props.handleInput}
+            onKeyDown={this.props.handleAddTask}
           />
 
       </header>

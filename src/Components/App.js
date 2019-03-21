@@ -37,17 +37,17 @@ const ENTER_KEY = 13;
     })
   }
 
-  editInput = (e) => {
+  handleEditInput = (e) => {
     const checkbox = e.target.previousSibling
     checkbox.previousSibling.classList.add('invisible')
     checkbox.classList.add('invisible')
-    const editInput = e.target.nextSibling.nextSibling
-    editInput.classList.add('le__edit_active')
-    editInput.focus()
-    editInput.value = e.target.innerHTML
+    const handleEditInput = e.target.nextSibling.nextSibling
+    handleEditInput.classList.add('le__edit_active')
+    handleEditInput.focus()
+    handleEditInput.value = e.target.innerHTML
   }
 
-  removeEditInput = (e) => {
+  handleRemoveEditInput = (e) => {
     const le = e.target.closest('.le')
     const toggle = le.querySelector('.view__toggle')
     const checkbox =  le.querySelector('.view__checkbox')
@@ -69,14 +69,14 @@ const ENTER_KEY = 13;
     })
   }
 
-   keysRemoveEditInput = (e) => {
+   handleKeysRemoveEditInput = (e) => {
     const escapeKey = 27;
     if (e.which === ENTER_KEY || e.keyCode === ENTER_KEY || e.which === escapeKey) {
       document.activeElement.blur()
     }
   };
 
-  addTask = e => {
+  handleAddTask = e => {
     const {listTask, currentTask} = this.state
     const newTask = currentTask
 
@@ -94,7 +94,7 @@ const ENTER_KEY = 13;
    }
   }
 
-  toggleAll = (e) => {
+  handletoggleAll = (e) => {
     const {listTask} = this.state
     const completedTasks = listTask.filter(task => {
       return task.checked === true
@@ -113,7 +113,7 @@ const ENTER_KEY = 13;
     })
   }
 
-  changeChecked = key => {
+  onChangeChecked = key => {
     const filteredTasks = this.state.listTask.filter(task => {
       if (task.key === key) {
         task.checked = !task.checked
@@ -126,25 +126,25 @@ const ENTER_KEY = 13;
   }
 
 
-  allTasksFilter = (e) => {
+  handleAllTasksFilter = (e) => {
     this.setState({
       filterState: 'All'
     })
   }
 
-  activeTasksFilter = (e) => {
+  handleActiveTasksFilter = (e) => {
     this.setState({
       filterState: 'Active'
     })
   }
 
-  completedTasksFilter = (e) => {
+  handleCompletedTasksFilter = (e) => {
     this.setState({
       filterState: 'Completed'
     })
   }
 
-  clearCompleted = (e) => {
+  handleClearCompleted = (e) => {
     const filteredTasks = this.state.listTask.filter(task => {
       return task.checked === false
     })
@@ -154,20 +154,7 @@ const ENTER_KEY = 13;
   }
 
   render() {
-    const {
-      addTask,
-      handleInput,
-      onDeleteTask,
-      changeChecked,
-      allTasksFilter,
-      activeTasksFilter,
-      completedTasksFilter,
-      clearCompleted,
-      toggleAll,
-      editInput,
-      removeEditInput,
-      keysRemoveEditInput,
-    } = this
+
     const {filterState, currentTask, listTask} = this.state
     localStorage.setItem('js-todos', JSON.stringify(this.state.listTask));
     const completedTasks = listTask.filter(task => {
@@ -181,28 +168,28 @@ const ENTER_KEY = 13;
         </div>
         <section className="todoapp">
           <Header
-            toggleAll={toggleAll}
-            addTask={addTask}
-            handleInput={handleInput}
+            handleToggleAll={this.handletoggleAll}
+            handleAddTask={this.handleAddTask}
+            handleInput={this.handleInput}
             currentTask={currentTask}
             listTask={listTask}
             completedTasks={completedTasks}
           />
           <Main
-            keysRemoveEditInput={keysRemoveEditInput}
+            handleKeysRemoveEditInput={this.handleKeysRemoveEditInput}
             listTask={listTask}
-            onDeleteTask={onDeleteTask}
-            changeChecked={changeChecked}
-            editInput={editInput}
-            removeEditInput={removeEditInput}
+            onDeleteTask={this.onDeleteTask}
+            onChangeChecked={this.onChangeChecked}
+            handleEditInput={this.handleEditInput}
+            handleRemoveEditInput={this.handleRemoveEditInput}
             filterState={filterState}
            />
           <Footer
             listTask={listTask}
-            allTasksFilter={allTasksFilter}
-            activeTasksFilter={activeTasksFilter}
-            completedTasksFilter={completedTasksFilter}
-            clearCompleted={clearCompleted}
+            handleAllTasksFilter={this.handleAllTasksFilter}
+            handleActiveTasksFilter={this.handleActiveTasksFilter}
+            handleCompletedTasksFilter={this.handleCompletedTasksFilter}
+            handleClearCompleted={this.handleClearCompleted}
             completedTasks={completedTasks}
             filterState={filterState}
           />
