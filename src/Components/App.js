@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import Header from './Header/Header'
-import Main from './Main/Main'
-import Footer from './Footer/Footer'
-import style from './App.module.scss'
-import s from './Main/Task.module.scss'
+import Header from 'Components/Header/Header'
+import Main from 'Components/Main/Main'
+import Footer from 'Components/Footer/Footer'
+import style from 'Components/App.module.scss'
+import s from 'Components/Main/Task.module.scss'
 const ENTER_KEY = 13;
 
  class App extends Component {

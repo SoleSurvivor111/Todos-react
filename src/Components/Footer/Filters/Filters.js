@@ -1,5 +1,5 @@
 import React,{Component} from 'react'
-import style from'./Filters.module.scss'
+import style from'Components/Footer/Filters/Filters.module.scss'
 
 export default class Filters extends Component {
 

@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import ListTask from './ListTask'
+import ListTask from 'Components/Main/ListTask'
 
 export default class Main extends Component {
   render() {

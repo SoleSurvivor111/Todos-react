@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import style from './Task.module.scss'
+import style from 'Components/Main/Task.module.scss'
 
  class ListTask extends Component {
    createTasks = task => {

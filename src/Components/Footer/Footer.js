@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import Filters from './Filters/Filters'
-import style from './Footer.module.scss'
+import Filters from 'Components/Footer/Filters/Filters'
+import style from 'Components/Footer/Footer.module.scss'
 
 export default class Footer extends Component {
   static propTypes = {
