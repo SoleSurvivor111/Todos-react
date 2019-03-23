@@ -3,18 +3,21 @@ import Header from 'Components/Header/Header'
 import Main from 'Components/Main/Main'
 import Footer from 'Components/Footer/Footer'
 import style from 'Components/App.module.scss'
-import s from 'Components/Main/Task.module.scss'
 const ENTER_KEY = 13;
 
  class App extends Component {
   state = {
       listTask: JSON.parse(localStorage.getItem('js-todos')) || [],
-      currentTask: {
+        currentTask: {
         text: '',
         key: '',
         checked: false
       },
       filterState: 'All',
+      editButtonState:{
+        text:'',
+        key:''
+      }
   }
 
   onDeleteTask = key => {
@@ -38,35 +41,41 @@ const ENTER_KEY = 13;
     })
   }
 
-  handleEditInput = (e) => {
-    const checkbox = e.target.previousSibling
-    checkbox.previousSibling.classList.add('invisible')
-    checkbox.classList.add('invisible')
-    const handleEditInput = e.target.nextSibling.nextSibling
-    handleEditInput.classList.add(s.view__edit_active)
-    handleEditInput.focus()
-    handleEditInput.value = e.target.innerHTML
+  onEditInput = (currentKey, currentText, prevEditButtonState) => {
+    this.setState({
+      editButtonState: {
+        ...prevEditButtonState,
+        key: currentKey,
+        text: currentText
+      }
+    })
   }
-
-  handleRemoveEditInput = (e) => {
-    const le = e.target.closest(`.${s.le}`)
-    const toggle = le.querySelector( `.${s.view__toggle}`)
-    const checkbox =  le.querySelector(`.${s.view__checkbox}`)
-    toggle.classList.remove('invisible')
-    checkbox.classList.remove('invisible')
-    e.target.classList.remove(s.view__edit_active)
-
+  handleChange = (e) => {
+    this.setState({
+      editButtonState: {
+        ...this.state.editButtonState,
+        text: e.target.value
+      }
+    })
+  }
+  handleRemoveEditInput = (currentKey) => {
+    const {editButtonState} = this.state
     const newList = this.state.listTask.filter(task => {
-      if (task.key === Number(le.dataset.id)) {
-        task.text = e.target.value
-        if (e.target.value.trim() === '') {
+      if (task.key === Number(currentKey)) {
+        task.text = editButtonState.text
+        if (editButtonState.text.trim() === '') {
           return false
         }
       }
       return task
     })
     this.setState({
-      listTask: newList
+      listTask: newList,
+      editButtonState: {
+        ...editButtonState,
+        text: '',
+        key: ''
+      }
     })
   }
 
@@ -156,7 +165,7 @@ const ENTER_KEY = 13;
 
   render() {
 
-    const {filterState, currentTask, listTask} = this.state
+    const {filterState, currentTask, listTask, editButtonState} = this.state
     localStorage.setItem('js-todos', JSON.stringify(this.state.listTask));
     const completedTasks = listTask.filter(task => {
       return task.checked === true
@@ -181,9 +190,11 @@ const ENTER_KEY = 13;
             listTask={listTask}
             onDeleteTask={this.onDeleteTask}
             onChangeChecked={this.onChangeChecked}
-            handleEditInput={this.handleEditInput}
+            onEditInput={this.onEditInput}
             handleRemoveEditInput={this.handleRemoveEditInput}
+            handleChange={this.handleChange}
             filterState={filterState}
+            editButtonState={editButtonState}
            />
           <Footer
             listTask={listTask}

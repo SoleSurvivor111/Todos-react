@@ -1,7 +1,16 @@
 import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import style from 'Components/Header/Header.module.scss'
 
  class Header extends Component {
+   static propTypes = {
+     currentTask: PropTypes.object.isRequired,
+     listTask: PropTypes.array.isRequired,
+     completedTasks: PropTypes.number.isRequired,
+     handleToggleAll: PropTypes.func.isRequired,
+     handleInput: PropTypes.func.isRequired,
+     handleAddTask: PropTypes.func.isRequired,
+   }
   render() {
     const {
       currentTask,

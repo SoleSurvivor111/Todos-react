@@ -94,17 +94,11 @@
   &__edit {
     border: 1px solid black;
     font-size: 25px;
-    height: 0;
+    height: 100%;
     left: 50px;
-    opacity: 0;
+    padding: 15px;
     position: absolute;
     top: 0;
-    width: 0;
-    &_active {
-      height: 100%;
-      opacity: 1;
-      padding: 15px;
-      width: 91%;
-    }
+    width: 91%;
   }
 }
