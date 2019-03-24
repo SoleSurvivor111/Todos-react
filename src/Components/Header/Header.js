@@ -11,6 +11,7 @@ import style from 'Components/Header/Header.module.scss'
      handleInput: PropTypes.func.isRequired,
      handleAddTask: PropTypes.func.isRequired,
    }
+   
   render() {
     const {
       currentTask,

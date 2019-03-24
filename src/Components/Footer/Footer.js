@@ -23,19 +23,20 @@ export default class Footer extends Component {
     const activeTasks = listTask.length - completedTasks;
     const theNumberOfActiveTasks = activeTasks === 1 ? '1 item left': `${activeTasks} items left`
     const clearCompletedValue = completedTasks === 0 ? false : 'Clear completed'
-    const footer = listTask.length !== 0 && <footer className={style.footer}>
-            <span className={style['footer__todo-count']}>{theNumberOfActiveTasks}</span>
-            <Filters
-              filterState={filterState}
-              handleAllTasksFilter={this.props.handleAllTasksFilter}
-              handleActiveTasksFilter={this.props.handleActiveTasksFilter}
-              handleCompletedTasksFilter={this.props.handleCompletedTasksFilter}
-            />
-            <button
-              className={style['footer__clear-completed']}
-              onMouseDown={this.props.handleClearCompleted}
-            >{clearCompletedValue}</button>
-          </footer>
+    const footer = listTask.length !== 0 &&
+    <footer className={style.footer}>
+      <span className={style['footer__todo-count']}>{theNumberOfActiveTasks}</span>
+      <Filters
+        filterState={filterState}
+        handleAllTasksFilter={this.props.handleAllTasksFilter}
+        handleActiveTasksFilter={this.props.handleActiveTasksFilter}
+        handleCompletedTasksFilter={this.props.handleCompletedTasksFilter}
+      />
+      <button
+        className={style['footer__clear-completed']}
+        onMouseDown={this.props.handleClearCompleted}
+      >{clearCompletedValue}</button>
+    </footer>
     return footer
   }
 }

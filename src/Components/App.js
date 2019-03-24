@@ -51,6 +51,7 @@ const ESCAPE_KEY = 27;
       }
     })
   }
+
   handleChange = (e) => {
     this.setState({
       editButtonState: {
@@ -59,6 +60,7 @@ const ESCAPE_KEY = 27;
       }
     })
   }
+  
   onRemoveEditInput = (currentKey, e) => {
     const {editButtonState} = this.state
     if (e.which === ENTER_KEY || e.which !== ESCAPE_KEY) {
@@ -146,7 +148,6 @@ const ESCAPE_KEY = 27;
     })
   }
 
-
   handleAllTasksFilter = (e) => {
     this.setState({
       filterState: 'All'
@@ -175,7 +176,6 @@ const ESCAPE_KEY = 27;
   }
 
   render() {
-
     const {filterState, currentTask, listTask, editButtonState} = this.state
     localStorage.setItem('js-todos', JSON.stringify(this.state.listTask));
     const completedTasks = listTask.filter(task => {

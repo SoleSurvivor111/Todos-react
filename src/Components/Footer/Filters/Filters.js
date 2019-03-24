@@ -2,7 +2,6 @@ import React,{Component} from 'react'
 import PropTypes from 'prop-types'
 import style from'Components/Footer/Filters/Filters.module.scss'
 
-
 export default class Filters extends Component {
   static propTypes = {
     handleAllTasksFilter: PropTypes.func.isRequired,

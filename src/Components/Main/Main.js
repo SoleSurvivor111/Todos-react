@@ -14,6 +14,7 @@ export default class Main extends Component {
     onChangeChecked:PropTypes.func.isRequired,
     onRemoveEditInput:PropTypes.func.isRequired,
   }
+  
   render() {
     const {
       listTask,
