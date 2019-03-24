@@ -10,9 +10,9 @@ export default class Main extends Component {
     onEditInput:PropTypes.func.isRequired,
     handleChange:PropTypes.func.isRequired,
     onDeleteTask:PropTypes.func.isRequired,
-    handleKeysRemoveEditInput:PropTypes.func.isRequired,
+    onKeysRemoveEditInput:PropTypes.func.isRequired,
     onChangeChecked:PropTypes.func.isRequired,
-    handleRemoveEditInput:PropTypes.func.isRequired,
+    onRemoveEditInput:PropTypes.func.isRequired,
   }
   render() {
     const {
@@ -27,9 +27,9 @@ export default class Main extends Component {
           onEditInput={this.props.onEditInput}
           listTask={listTask}
           onDeleteTask={this.props.onDeleteTask}
-          handleKeysRemoveEditInput={this.props.handleKeysRemoveEditInput}
+          onKeysRemoveEditInput={this.props.onKeysRemoveEditInput}
           onChangeChecked={this.props.onChangeChecked}
-          handleRemoveEditInput={this.props.handleRemoveEditInput}
+          onRemoveEditInput={this.props.onRemoveEditInput}
           filterState={filterState}
           editButtonState={editButtonState}
           handleChange={this.props.handleChange}

@@ -11,8 +11,8 @@ import PropTypes from 'prop-types'
      onDeleteTask: PropTypes.func.isRequired,
      handleChange: PropTypes.func.isRequired,
      onEditInput: PropTypes.func.isRequired,
-     handleRemoveEditInput: PropTypes.func.isRequired,
-     handleKeysRemoveEditInput: PropTypes.func.isRequired,
+     onRemoveEditInput: PropTypes.func.isRequired,
+     onKeysRemoveEditInput: PropTypes.func.isRequired,
    }
 
    createTasks = task => {
@@ -27,43 +27,45 @@ import PropTypes from 'prop-types'
     }
 
     const viewToggleClass = editButtonState.key === task.key ?
-     `${style.view__toggle} invisible`
-     :
-     style.view__toggle
+    `${style.view__toggle} invisible`
+    :
+    style.view__toggle
     const viewCheckboxClass = editButtonState.key === task.key ?
-     `${style.view__checkbox} invisible`
-     :
-     style.view__checkbox
-     const editButton = editButtonState.key !== task.key ? false :
-     <input type={'textarea'} className={style.view__edit}
-       onBlur={() => this.props.handleRemoveEditInput(task.key)}
-       onKeyDown={this.props.handleKeysRemoveEditInput}
-       onChange={this.props.handleChange}
-       defaultValue={task.text}
-       autoFocus
-     />
-     return (
-       <li className={liClassName} data-id={task.key} key={task.key}  >
-         <div className={style.view}>
-           <input
-             className={viewToggleClass}
-             type='checkbox'
-             onMouseDown={() => this.props.onChangeChecked(task.key)}
-             checked={task.checked}
-           />
-           <div className={viewCheckboxClass}/>
-         <label
-          className={style.view__lable}
-          onDoubleClick={() => this.props.onEditInput(task.key, task.text, editButtonState)}>
-            {task.text}
-         </label>
-         <button
-          className={style.view__destroy}
-          onMouseDown={() => this.props.onDeleteTask(task.key)}
+    `${style.view__checkbox} invisible`
+    :
+    style.view__checkbox
+    const editButton = editButtonState.key !== task.key ?
+    false
+    :
+    <input type={'textarea'} className={style.view__edit}
+      onBlur={(e) => this.props.onRemoveEditInput(task.key, e)}
+      onKeyDown={(e) => this.props.onKeysRemoveEditInput(task.key, e)}
+      onChange={this.props.handleChange}
+      defaultValue={task.text}
+      autoFocus
+    />
+    return (
+     <li className={liClassName} data-id={task.key} key={task.key}  >
+       <div className={style.view}>
+         <input
+           className={viewToggleClass}
+           type='checkbox'
+           onMouseDown={() => this.props.onChangeChecked(task.key)}
+           checked={task.checked}
          />
-         {editButton}
-         </div>
-       </li>
+         <div className={viewCheckboxClass}/>
+       <label
+        className={style.view__lable}
+        onDoubleClick={() => this.props.onEditInput(task.key, task.text, editButtonState)}>
+          {task.text}
+       </label>
+       <button
+        className={style.view__destroy}
+        onMouseDown={() => this.props.onDeleteTask(task.key)}
+       />
+       {editButton}
+       </div>
+     </li>
      )
    }
   render() {

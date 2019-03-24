@@ -4,6 +4,7 @@ import Main from 'Components/Main/Main'
 import Footer from 'Components/Footer/Footer'
 import style from 'Components/App.module.scss'
 const ENTER_KEY = 13;
+const ESCAPE_KEY = 27;
 
  class App extends Component {
   state = {
@@ -58,8 +59,9 @@ const ENTER_KEY = 13;
       }
     })
   }
-  handleRemoveEditInput = (currentKey) => {
+  onRemoveEditInput = (currentKey, e) => {
     const {editButtonState} = this.state
+    if (e.which === ENTER_KEY || e.which !== ESCAPE_KEY) {
     const newList = this.state.listTask.filter(task => {
       if (task.key === Number(currentKey)) {
         task.text = editButtonState.text
@@ -69,20 +71,29 @@ const ENTER_KEY = 13;
       }
       return task
     })
-    this.setState({
-      listTask: newList,
-      editButtonState: {
-        ...editButtonState,
-        text: '',
-        key: ''
-      }
-    })
+
+      this.setState({
+        listTask: newList,
+        editButtonState: {
+          ...editButtonState,
+          text: '',
+          key: ''
+        }
+      })
+    } else {
+      this.setState({
+        editButtonState: {
+          ...editButtonState,
+          text: '',
+          key: ''
+        }
+      })
+    }
   }
 
-   handleKeysRemoveEditInput = (e) => {
-    const escapeKey = 27;
-    if (e.which === ENTER_KEY || e.keyCode === ENTER_KEY || e.which === escapeKey) {
-      document.activeElement.blur()
+   onKeysRemoveEditInput = (key, e) => {
+    if (e.which === ENTER_KEY || e.keyCode === ENTER_KEY || e.which === ESCAPE_KEY) {
+      this.onRemoveEditInput(key, e)
     }
   };
 
@@ -186,12 +197,12 @@ const ENTER_KEY = 13;
             completedTasks={completedTasks}
           />
           <Main
-            handleKeysRemoveEditInput={this.handleKeysRemoveEditInput}
+            onKeysRemoveEditInput={this.onKeysRemoveEditInput}
             listTask={listTask}
             onDeleteTask={this.onDeleteTask}
             onChangeChecked={this.onChangeChecked}
             onEditInput={this.onEditInput}
-            handleRemoveEditInput={this.handleRemoveEditInput}
+            onRemoveEditInput={this.onRemoveEditInput}
             handleChange={this.handleChange}
             filterState={filterState}
             editButtonState={editButtonState}
