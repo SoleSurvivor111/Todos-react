@@ -1,6 +1,6 @@
-import React,{Component} from 'react'
-import PropTypes from 'prop-types'
-import style from'Components/Footer/Filters/Filters.module.scss'
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import style from 'Components/Footer/Filters/Filters.module.scss';
 
 export default class Filters extends Component {
   static propTypes = {
@@ -16,7 +16,7 @@ export default class Filters extends Component {
     const  active =  filterState === `Active` ? `Active ${style.highlight}` : `Active`
     const  completed =  filterState === `Completed` ? `${style.Completed} ${style.highlight}` : `Completed`
     return (
-      <ul className={style.filters} >
+      <ul className={style.filters}>
        <li className={style.li} key={33} onMouseDown={this.props.handleAllTasksFilter}>
          <a
            href="#/"
@@ -41,7 +41,7 @@ export default class Filters extends Component {
            Completed
          </a>
        </li>
-     </ul>
+      </ul>
     )
   }
 }

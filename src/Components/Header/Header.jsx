@@ -1,6 +1,6 @@
-import React, {Component} from 'react'
-import PropTypes from 'prop-types'
-import style from 'Components/Header/Header.module.scss'
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import style from 'Components/Header/Header.module.scss';
 
  class Header extends Component {
    static propTypes = {
@@ -11,7 +11,7 @@ import style from 'Components/Header/Header.module.scss'
      handleInput: PropTypes.func.isRequired,
      handleAddTask: PropTypes.func.isRequired,
    }
-   
+
   render() {
     const {
       currentTask,
