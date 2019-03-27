@@ -22,7 +22,7 @@ export default class App extends Component {
     },
   }
 
-  onDeleteTask = (key) => {
+  handleDeleteTask = (key) => {
     const { listTask } = this.state;
     const filteredTasks = listTask.filter(task => task.key !== key);
     this.setState({
@@ -42,7 +42,7 @@ export default class App extends Component {
     });
   }
 
-  onEditInput = (currentKey, currentText, prevEditButtonState) => {
+  handleEditInput = (currentKey, currentText, prevEditButtonState) => {
     this.setState({
       editButtonState: {
         ...prevEditButtonState,
@@ -62,7 +62,7 @@ export default class App extends Component {
     });
   }
 
-  onRemoveEditInput = (currentKey, e) => {
+  handleRemoveEditInput = (currentKey, e) => {
     const { editButtonState, listTask } = this.state;
     if (e.which === ENTER_KEY || e.which !== ESCAPE_KEY) {
       let newList;
@@ -100,9 +100,9 @@ export default class App extends Component {
     }
   }
 
-   onKeysRemoveEditInput = (key, e) => {
+   handleKeysRemoveEditInput = (key, e) => {
      if (e.which === ENTER_KEY || e.keyCode === ENTER_KEY || e.which === ESCAPE_KEY) {
-       this.onRemoveEditInput(key, e);
+       this.handleRemoveEditInput(key, e);
      }
    };
 
@@ -139,7 +139,7 @@ export default class App extends Component {
     });
   }
 
-  onChangeChecked = (key) => {
+  handleChangeChecked = (key) => {
     const { listTask } = this.state;
     const filteredTasks = listTask.map((task) => {
       if (task.key === key) {
@@ -195,30 +195,30 @@ export default class App extends Component {
         </div>
         <section className={style.todoapp}>
           <Header
-            handleToggleAll={this.handletoggleAll}
-            handleAddTask={this.handleAddTask}
-            handleInput={this.handleInput}
+            onToggleAll={this.handletoggleAll}
+            onAddTask={this.handleAddTask}
+            onInput={this.handleInput}
             currentTask={currentTask}
             listTask={listTask}
             completedTasks={completedTasks}
           />
           <Main
-            onKeysRemoveEditInput={this.onKeysRemoveEditInput}
+            onKeysRemoveEditInput={this.handleKeysRemoveEditInput}
             listTask={listTask}
-            onDeleteTask={this.onDeleteTask}
-            onChangeChecked={this.onChangeChecked}
-            onEditInput={this.onEditInput}
-            onRemoveEditInput={this.onRemoveEditInput}
-            handleChange={this.handleChange}
+            onDeleteTask={this.handleDeleteTask}
+            onChangeChecked={this.handleChangeChecked}
+            onEditInput={this.handleEditInput}
+            onRemoveEditInput={this.handleRemoveEditInput}
+            onChange={this.handleChange}
             filterState={filterState}
             editButtonState={editButtonState}
           />
           <Footer
             listTask={listTask}
-            handleAllTasksFilter={this.handleAllTasksFilter}
-            handleActiveTasksFilter={this.handleActiveTasksFilter}
-            handleCompletedTasksFilter={this.handleCompletedTasksFilter}
-            handleClearCompleted={this.handleClearCompleted}
+            onAllTasksFilter={this.handleAllTasksFilter}
+            onActiveTasksFilter={this.handleActiveTasksFilter}
+            onCompletedTasksFilter={this.handleCompletedTasksFilter}
+            onClearCompleted={this.handleClearCompleted}
             completedTasks={completedTasks}
             filterState={filterState}
           />

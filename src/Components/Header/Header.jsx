@@ -1,26 +1,20 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import style from 'Components/Header/Header.module.scss';
 
- class Header extends Component {
-   static propTypes = {
-     currentTask: PropTypes.object.isRequired,
-     listTask: PropTypes.array.isRequired,
-     completedTasks: PropTypes.number.isRequired,
-     handleToggleAll: PropTypes.func.isRequired,
-     handleInput: PropTypes.func.isRequired,
-     handleAddTask: PropTypes.func.isRequired,
-   }
+const Header = (props) => {
+  const {
+    currentTask,
+    listTask,
+    completedTasks,
+    onToggleAll,
+    onInput,
+    onAddTask,
+  } = props;
 
-  render() {
-    const {
-      currentTask,
-      listTask,
-      completedTasks
-    } = this.props
-
-    const toggleAllChecked = listTask.length === completedTasks ? true : false
-    const checkbox =  listTask.length !== 0 &&
+  const toggleAllChecked = listTask.length === completedTasks;
+  const checkbox = listTask.length !== 0
+      && (
       <div>
         <input
           id="toggle-all"
@@ -31,22 +25,32 @@ import style from 'Components/Header/Header.module.scss';
         <label
           htmlFor="toggle-all"
           className={style.header__label}
-          onMouseDown={this.props.handleToggleAll}
+          onMouseDown={onToggleAll}
         />
       </div>
+      );
 
-    return (
-      <header className={style.header}>
-          {checkbox}
-          <input className={style['header__new-todo']}
-            placeholder="What needs to be done?"
-            value={currentTask.text}
-            autoFocus
-            onChange={this.props.handleInput}
-            onKeyDown={this.props.handleAddTask}
-          />
-      </header>
-    )
-  }
-}
-export default Header
+  return (
+    <header className={style.header}>
+      {checkbox}
+      <input
+        className={style['header__new-todo']}
+        placeholder="What needs to be done?"
+        value={currentTask.text}
+        autoFocus
+        onChange={onInput}
+        onKeyDown={onAddTask}
+      />
+    </header>
+  );
+};
+export default Header;
+
+Header.propTypes = {
+  currentTask: PropTypes.objectOf.isRequired,
+  listTask: PropTypes.func.isRequired,
+  completedTasks: PropTypes.number.isRequired,
+  onToggleAll: PropTypes.func.isRequired,
+  onInput: PropTypes.func.isRequired,
+  onAddTask: PropTypes.func.isRequired,
+};

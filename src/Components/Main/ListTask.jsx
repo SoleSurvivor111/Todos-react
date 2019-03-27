@@ -5,11 +5,11 @@ import PropTypes from 'prop-types';
 class ListTask extends Component {
    static propTypes = {
      filterState: PropTypes.string.isRequired,
-     listTask: PropTypes.InstanceOf(Array).isRequired,
+     listTask: PropTypes.func.isRequired,
      editButtonState: PropTypes.objectOf.isRequired,
      onChangeChecked: PropTypes.func.isRequired,
      onDeleteTask: PropTypes.func.isRequired,
-     handleChange: PropTypes.func.isRequired,
+     onChange: PropTypes.func.isRequired,
      onEditInput: PropTypes.func.isRequired,
      onRemoveEditInput: PropTypes.func.isRequired,
      onKeysRemoveEditInput: PropTypes.func.isRequired,
@@ -21,7 +21,7 @@ class ListTask extends Component {
        editButtonState,
        onRemoveEditInput,
        onKeysRemoveEditInput,
-       handleChange,
+       onChange,
        onChangeChecked,
        onEditInput,
        onDeleteTask,
@@ -47,9 +47,10 @@ class ListTask extends Component {
          <input
            type="textarea"
            className={style.view__edit}
+           autoFocus
            onBlur={e => onRemoveEditInput(task.key, e)}
            onKeyDown={e => onKeysRemoveEditInput(task.key, e)}
-           onChange={handleChange}
+           onChange={onChange}
            defaultValue={task.text}
          />
        );

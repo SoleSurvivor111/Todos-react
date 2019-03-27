@@ -1,42 +1,50 @@
-import React, { Component } from 'react';
+import React from 'react';
 import ListTask from 'Components/Main/ListTask';
 import PropTypes from 'prop-types';
 
-export default class Main extends Component {
-  static propTypes = {
-    listTask: PropTypes.array.isRequired,
-    filterState: PropTypes.string.isRequired,
-    editButtonState: PropTypes.object.isRequired,
-    onEditInput: PropTypes.func.isRequired,
-    handleChange: PropTypes.func.isRequired,
-    onDeleteTask: PropTypes.func.isRequired,
-    onKeysRemoveEditInput: PropTypes.func.isRequired,
-    onChangeChecked: PropTypes.func.isRequired,
-    onRemoveEditInput: PropTypes.func.isRequired,
-  }
+const Main = (props) => {
+  const {
+    listTask,
+    filterState,
+    editButtonState,
+    onEditInput,
+    onDeleteTask,
+    onKeysRemoveEditInput,
+    onChangeChecked,
+    onRemoveEditInput,
+    onChange,
+  } = props;
+  return (
+    <section className="main">
+      <ul className="todo-list">
+        <ListTask
+          onEditInput={onEditInput}
+          listTask={listTask}
+          onDeleteTask={onDeleteTask}
+          onKeysRemoveEditInput={onKeysRemoveEditInput}
+          onChangeChecked={onChangeChecked}
+          onRemoveEditInput={onRemoveEditInput}
+          filterState={filterState}
+          editButtonState={editButtonState}
+          onChange={onChange}
+        />
+      </ul>
+    </section>
+  );
+};
+export default Main;
 
-  render() {
-    const {
-      listTask,
-      filterState,
-      editButtonState,
-    } = this.props;
-    return (
-      <section className="main">
-        <ul className="todo-list">
-          <ListTask
-            onEditInput={this.props.onEditInput}
-            listTask={listTask}
-            onDeleteTask={this.props.onDeleteTask}
-            onKeysRemoveEditInput={this.props.onKeysRemoveEditInput}
-            onChangeChecked={this.props.onChangeChecked}
-            onRemoveEditInput={this.props.onRemoveEditInput}
-            filterState={filterState}
-            editButtonState={editButtonState}
-            handleChange={this.props.handleChange}
-          />
-        </ul>
-      </section>
-    );
-  }
-}
+Main.propTypes = {
+  listTask: PropTypes.oneOfType([
+    PropTypes.func.isRequired,
+    PropTypes.arrayOf.isRequired,
+  ]),
+  filterState: PropTypes.string.isRequired,
+  editButtonState: PropTypes.objectOf.isRequired,
+  onEditInput: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
+  onDeleteTask: PropTypes.func.isRequired,
+  onKeysRemoveEditInput: PropTypes.func.isRequired,
+  onChangeChecked: PropTypes.func.isRequired,
+  onRemoveEditInput: PropTypes.func.isRequired,
+};
